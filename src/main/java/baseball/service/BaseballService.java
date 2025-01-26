@@ -13,7 +13,7 @@ public class BaseballService {
 
     private final BaseballValidator baseballValidator = new BaseballValidator();
 
-    public Set<Integer> setTargetNum(int min, int max, int count) {
+    public List<Integer> setTargetNum(int min, int max, int count) {
         Set<Integer> targetNumSet = new HashSet<>();
 
         while (targetNumSet.size() < count) {
@@ -21,7 +21,8 @@ public class BaseballService {
             targetNumSet.add(randomNum); // 중복되지 않도록 HashSet에 추가
         }
 
-        return targetNumSet;
+        List<Integer> targetNumList = new ArrayList<>(targetNumSet);
+        return targetNumList;
     }
 
     public int validatePickedNum(int pickedNumber) {
@@ -31,16 +32,25 @@ public class BaseballService {
         return pickedNumber;
     }
 
-    public Result getNumberResult(Set<Integer> targetNumSet, List<Integer> pickedNumSet) {
+    public List<Integer> convertToList(int pickedNumber) {
+        List<Integer> numberList = new ArrayList<>();
+
+        while (pickedNumber > 0) {
+            numberList.add(0, pickedNumber % 10);
+            pickedNumber /= 10;
+        }
+
+        return numberList;
+    }
+
+    public Result getNumberResult(List<Integer> targetNumList, List<Integer> pickedNumList) {
         int strike = 0;
         int ball = 0;
 
-        List<Integer> targetNumList = new ArrayList<>(targetNumSet);
-
-        for (int i = 0; i < pickedNumSet.size(); i++) {
-            if (pickedNumSet.get(i).equals(targetNumList.get(i))) {
+        for (int i = 0; i < pickedNumList.size(); i++) {
+            if (pickedNumList.get(i).equals(targetNumList.get(i))) {
                 strike++;
-            } else if (targetNumList.contains(pickedNumSet.get(i))) {
+            } else if (targetNumList.contains(pickedNumList.get(i))) {
                 ball++;
             }
         }
@@ -48,10 +58,10 @@ public class BaseballService {
         return new Result(strike, ball);
     }
 
-
     public void baseballRestart(int num) {
         if (num == 2) {
             System.exit(0);
         }
     }
+
 }

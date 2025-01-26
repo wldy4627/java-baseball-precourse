@@ -5,9 +5,7 @@ import baseball.service.BaseballService;
 import baseball.view.Input;
 import baseball.view.Output;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class BaseballController {
 
@@ -22,22 +20,26 @@ public class BaseballController {
     }
 
     public void run() {
+        // targetNum 설정
+        List<Integer> targetNumList = baseballService.setTargetNum(1, 9, 3);
 
         while (true) {
-            // targetNum 설정
-            Set<Integer> targetNumSet = baseballService.setTargetNum(1, 9, 3);
-
             // 시도 숫자 입력받기
             output.printPickNumbers();
             int pickedNumber = baseballService.validatePickedNum(input.scanPickedNumbers());
-            List<Integer> pickedNumList = new ArrayList<>(pickedNumber);
+            List<Integer> pickedNumList = baseballService.convertToList(pickedNumber);
 
             // 입력 숫자 결과 출력
-            Result result = baseballService.getNumberResult(targetNumSet, pickedNumList);
+            Result result = baseballService.getNumberResult(targetNumList, pickedNumList);
             output.printBaseballResult(result);
 
-            output.printBaseballRestart();
-            baseballService.baseballRestart(input.baseballRestartChoice());
+            // 게임 재시작 물어보기
+            if (result.getStrike() == 3) {
+                output.printBaseballRestart();
+                baseballService.baseballRestart(input.baseballRestartChoice());
+
+                targetNumList = baseballService.setTargetNum(1, 9, 3);
+            }
         }
     }
 }
