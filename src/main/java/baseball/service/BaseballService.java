@@ -7,6 +7,9 @@ import static camp.nextstep.edu.missionutils.Randoms.pickNumberInRange;
 
 public class BaseballService {
 
+    private final BaseballValidator baseballValidator = new BaseballValidator();
+
+
     public Set<Integer> setTargetNum(int min, int max, int count) {
         Set<Integer> targetNumSet = new HashSet<>();
 
@@ -16,5 +19,10 @@ public class BaseballService {
         }
 
         return targetNumSet;
+    }
+
+    public void validatePickedNum(int pickedNumber) {
+        baseballValidator.isThreeDigitNumber(pickedNumber);
+        baseballValidator.hasDuplicateDigits(pickedNumber);
     }
 }
