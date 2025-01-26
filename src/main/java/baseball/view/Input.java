@@ -1,13 +1,16 @@
 package baseball.view;
 
-import camp.nextstep.edu.missionutils.Console;
+import java.util.Scanner;
 
 public class Input {
+
+    Scanner scan = new Scanner(System.in);
+
     public int scanPickedNumbers() {
-        return Integer.parseInt(Console.readLine());
+        return Integer.parseInt(scan.nextLine());
     }
 
     public int baseballRestartChoice() {
-        return Integer.parseInt(Console.readLine());
+        return Integer.parseInt(scan.nextLine());
     }
 }
