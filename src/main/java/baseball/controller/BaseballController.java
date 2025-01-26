@@ -22,16 +22,22 @@ public class BaseballController {
     }
 
     public void run() {
-        // targetNum 설정
-        Set<Integer> targetNumSet = baseballService.setTargetNum(1, 9, 3);
 
-        // 시도 숫자 입력받기
-        output.printPickNumbers();
-        int pickedNumber = baseballService.validatePickedNum(input.scanPickedNumbers());
-        List<Integer> pickedNumList = new ArrayList<>(pickedNumber);
+        while (true) {
+            // targetNum 설정
+            Set<Integer> targetNumSet = baseballService.setTargetNum(1, 9, 3);
 
-        // 입력 숫자 결과 출력
-        Result result = baseballService.getNumberResult(targetNumSet, pickedNumList);
-        output.printBaseballResult(result);
+            // 시도 숫자 입력받기
+            output.printPickNumbers();
+            int pickedNumber = baseballService.validatePickedNum(input.scanPickedNumbers());
+            List<Integer> pickedNumList = new ArrayList<>(pickedNumber);
+
+            // 입력 숫자 결과 출력
+            Result result = baseballService.getNumberResult(targetNumSet, pickedNumList);
+            output.printBaseballResult(result);
+
+            output.printBaseballRestart();
+            baseballService.baseballRestart(input.baseballRestartChoice());
+        }
     }
 }

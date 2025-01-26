@@ -49,4 +49,9 @@ public class BaseballService {
     }
 
 
+    public void baseballRestart(int num) {
+        if (num == 2) {
+            System.exit(0);
+        }
+    }
 }
